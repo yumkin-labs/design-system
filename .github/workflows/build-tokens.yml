@@ -50,7 +50,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add build/web/tokens.css build/flutter/tokens.dart
+          # Force add the files (override .gitignore) 
+          git add -f build/web/tokens.css build/flutter/tokens.dart
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
