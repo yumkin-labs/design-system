@@ -3,8 +3,11 @@ name: Build Design Tokens
 
 on:
   push:
-    branches:
-      - $default-branch
+    branches: [main]
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,3 +44,16 @@ jobs:
         with:
           name: dart-tokens
           path: build/flutter/tokens.dart
+
+      - name: Commit and push generated tokens
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add build/web/tokens.css build/flutter/tokens.dart
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(tokens): update generated design tokens [skip ci]"
+          git push
