@@ -1,0 +1,156 @@
+{
+    "color": {
+        "white": {
+            "$type": "color",
+            "$value": "#FFFFFF"
+        },
+        "black": {
+            "$type": "color",
+            "$value": "#000000"
+        },
+        "dark": {
+            "$type": "color",
+            "$value": "{color.turquoise.900}"
+        },
+        "brand": {
+            "solid": {
+                "$type": "color",
+                "$value": "{color.turquoise.500}"
+            },
+            "contrast": {
+                "$type": "color",
+                "$value": "{color.turquoise.300}"
+            },
+            "shade": {
+                "$type": "color",
+                "$value": "{color.turquoise.100}"
+            }
+        },
+        "secondary": {
+            "solid": {
+                "$type": "color",
+                "$value": "{color.beige.500}"
+            },
+            "contrast": {
+                "$type": "color",
+                "$value": "{color.beige.300}"
+            },
+            "shade": {
+                "$type": "color",
+                "$value": "{color.beige.100}"
+            }
+        },
+        "surface": {
+            "text": {
+                "$type": "color",
+                "$value": "{color.dark}"
+            },
+            "text-negative": {
+                "$type": "color",
+                "$value": "{color.white}"
+            },
+            "overlay": {
+                "$type": "color",
+                "$value": "rgba(0,0,0,0.2)"
+            },
+            "background-white": {
+                "$type": "color",
+                "$value": "{color.white}"
+            },
+            "background-2": {
+                "$type": "color",
+                "$value": "{color.beige.200}"
+            },
+            "background-1": {
+                "$type": "color",
+                "$value": "{color.beige.100}"
+            },
+            "background-0": {
+                "$type": "color",
+                "$value": "{color.beige.050}"
+            }
+        },
+        "state": {
+            "success": {
+                "solid": {
+                    "$type": "color",
+                    "$value": "{color.green.500}"
+                },
+                "contrast": {
+                    "$type": "color",
+                    "$value": "{color.green.300}"
+                },
+                "shade": {
+                    "$type": "color",
+                    "$value": "{color.green.100}"
+                }
+            },
+            "warning": {
+                "solid": {
+                    "$type": "color",
+                    "$value": "{color.yellow.500}"
+                },
+                "contrast": {
+                    "$type": "color",
+                    "$value": "{color.yellow.300}"
+                },
+                "shade": {
+                    "$type": "color",
+                    "$value": "{color.yellow.100}"
+                }
+            },
+            "alarm": {
+                "solid": {
+                    "$type": "color",
+                    "$value": "{color.red.500}"
+                },
+                "contrast": {
+                    "$type": "color",
+                    "$value": "{color.red.300}"
+                },
+                "shade": {
+                    "$type": "color",
+                    "$value": "{color.red.100}"
+                }
+            }
+        }
+    },
+    "font": {
+        "size": {
+            "l": {
+                "$type": "dimension",
+                "$value": "1.25rem"
+            },
+            "m": {
+                "$type": "dimension",
+                "$value": "1rem"
+            },
+            "s": {
+                "$type": "dimension",
+                "$value": "0.825rem"
+            },
+            "xs": {
+                "$type": "dimension",
+                "$value": "0.75rem"
+            },
+            "xxs": {
+                "$type": "dimension",
+                "$value": "0.625rem"
+            }
+        },
+        "weight": {
+            "bold": {
+                "$type": "fontWeight",
+                "$value": "700"
+            },
+            "semibold": {
+                "$type": "fontWeight",
+                "$value": "600"
+            },
+            "medium": {
+                "$type": "fontWeight",
+                "$value": "500"
+            }
+        }
+    }
+}

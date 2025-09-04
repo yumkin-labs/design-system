@@ -1,0 +1,46 @@
+# .github/workflows/build-tokens.yml
+name: Build Design Tokens
+
+on:
+  push:
+    paths:
+      - "tokens/**/*.json"
+      - "build.js"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build design tokens
+        run: node build.js
+
+      - name: Upload CSS artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: css-tokens
+          path: build/web/tokens.css
+
+      - name: Upload Dart artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dart-tokens
+          path: build/flutter/tokens.dart

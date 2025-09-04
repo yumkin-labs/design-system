@@ -1,164 +1,205 @@
-// build.js
-import StyleDictionary from 'style-dictionary';
-import fs from 'node:fs';
-import path from 'node:path';
+// build-tokens.js
+import fs from 'fs';
+import path from 'path';
 import tinycolor from 'tinycolor2';
 
-// ---------- Helpers ----------
-const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
+// Helper functions
+const toRgb = (val) => tinycolor(val).toRgbString();
+const getNumber = (v) => {
+  const s = String(v);
+  const m = s.match(/^(-?\d+(\.\d+)?)/);
+  return m ? Number(m[0]) : Number(s);
+};
+const toHex8 = (val) => {
+  const hex8 = tinycolor(val).toHex8().toUpperCase();
+  return `0x${hex8.slice(6)}${hex8.slice(0, 6)}`;
+};
 
-// Token Studio sometimes uses "$type/$value", sometimes "type/value"
-function normalizeToken(token) {
-  if (!token) return token;
-  if ('$value' in token || '$type' in token) return token;
-  if ('value' in token || 'type' in token) {
-    const t = { ...token };
-    if ('value' in t) { t.$value = t.value; delete t.value; }
-    if ('type' in t) { t.$type = t.type; delete t.type; }
-    return t;
-  }
-  return token;
-}
+// Read and preprocess the token files
+const buildTokens = async () => {
+  try {
+    // Load all token files
+    const primitives = JSON.parse(fs.readFileSync('./tokens/Primitives.json', 'utf8'));
+    const semantics = JSON.parse(fs.readFileSync('./tokens/Semantics.json', 'utf8'));
+    const components = JSON.parse(fs.readFileSync('./tokens/Components.json', 'utf8'));
 
-// Convert any hex/rgb/etc. to hex8 for Flutter
-function toHex8(color) {
-  const tc = tinycolor(color);
-  // Flutter expects AARRGGBB; Tinycolor toHex8 returns RRGGBBAA
-  const hex8 = tc.toHex8().toUpperCase(); // RRGGBBAA
-  const rrggbb = hex8.slice(0, 6);
-  const aa = hex8.slice(6, 8);
-  return `0x${aa}${rrggbb}`;
-}
-
-function toCssVarName(pathArr) {
-  return `--${pathArr.join('-').toLowerCase().replace(/[^a-z0-9-]/g, '-')}`;
-}
-
-function toDartIdentifier(pathArr) {
-  let name = pathArr.join('_').replace(/[^a-zA-Z0-9_]/g, '_');
-  if (/^[0-9]/.test(name)) name = '_' + name;
-  return name;
-}
-
-// Extract leaf tokens (recursively), normalizing $type/$value
-function flattenTokens(obj, pathArr = []) {
-  const out = [];
-  for (const key of Object.keys(obj)) {
-    const node = obj[key];
-    if (isObject(node) && ('$value' in node || 'value' in node || '$type' in node || 'type' in node)) {
-      const t = normalizeToken(node);
-      out.push({
-        path: [...pathArr, key],
-        type: t.$type,
-        value: t.$value
-      });
-    } else if (isObject(node)) {
-      out.push(...flattenTokens(node, [...pathArr, key]));
+    // Normalize tokens to use consistent format
+    function normalizeTokens(obj, result = {}, path = []) {
+      for (const [key, value] of Object.entries(obj)) {
+        const currentPath = [...path, key];
+        
+        // If it's a token with $value or value
+        if (value && (value.$value !== undefined || value.value !== undefined)) {
+          const tokenValue = value.$value !== undefined ? value.$value : value.value;
+          const tokenType = value.$type !== undefined ? value.$type : value.type;
+          
+          // Create path-based key
+          const tokenKey = currentPath.join('.');
+          result[tokenKey] = {
+            value: tokenValue,
+            type: tokenType || inferType(tokenValue),
+            path: currentPath
+          };
+        }
+        // If it's an object without token values (a category)
+        else if (value && typeof value === 'object') {
+          normalizeTokens(value, result, currentPath);
+        }
+      }
+      
+      return result;
     }
-  }
-  return out;
-}
 
-// ---------- Load tokens ----------
-const TOKENS_PATH = path.resolve('tokens/tokens.json');
-if (!fs.existsSync(TOKENS_PATH)) {
-  console.error('Missing tokens/tokens.json');
-  process.exit(1);
-}
-const raw = JSON.parse(fs.readFileSync(TOKENS_PATH, 'utf8'));
-const allTokens = flattenTokens(raw);
-
-// ---------- CSS output ----------
-function buildCss(tokens, outFile) {
-  const lines = [':root {'];
-  for (const t of tokens) {
-    const varName = toCssVarName(t.path);
-    let cssVal = t.value;
-
-    if (t.type === 'color') {
-      // Ensure css-compatible color string
-      cssVal = tinycolor(t.value).toRgbString(); // e.g. "rgb(79,70,229)"
-    } else if (t.type === 'dimension') {
-      // Keep units if present; if unitless number is given, default to px
-      cssVal = String(t.value);
-      if (/^\d+(\.\d+)?$/.test(cssVal)) cssVal += 'px';
+    // Infer token type if not specified
+    function inferType(value) {
+      if (typeof value === 'string') {
+        if (value.startsWith('#')) return 'color';
+        if (value.includes('px') || value.includes('rem')) return 'dimension';
+        if (value.match(/^[0-9]+$/)) return 'fontWeight';
+      }
+      return 'string';
     }
-    lines.push(`  ${varName}: ${cssVal};`);
-  }
-  lines.push('}');
-  fs.mkdirSync(path.dirname(outFile), { recursive: true });
-  fs.writeFileSync(outFile, lines.join('\n') + '\n', 'utf8');
-  console.log('✓ CSS written to', outFile);
-}
 
-// ---------- Flutter (Dart) output ----------
-function buildDart(tokens, outFile) {
-  const colorLines = [];
-  const doubleLines = [];
-  const stringLines = [];
-  const intLines = [];
+    // Create a flattened, normalized set of tokens
+    const allTokens = {
+      ...normalizeTokens(primitives),
+      ...normalizeTokens(semantics),
+      ...normalizeTokens(components)
+    };
 
-  for (const t of tokens) {
-    const id = toDartIdentifier(t.path);
-    const type = t.type;
-    const v = String(t.value);
+    // Resolve references in token values
+    function resolveReferences(tokens) {
+      const result = {};
+      const resolveValue = (value) => {
+        if (typeof value !== 'string') return value;
+        
+        return value.replace(/\{([^}]+)\}/g, (match, refPath) => {
+          const referencedToken = tokens[refPath];
+          if (!referencedToken) return match; // Keep original if reference not found
+          
+          // Recursively resolve nested references
+          const resolvedValue = resolveValue(referencedToken.value);
+          return resolvedValue;
+        });
+      };
 
-    if (type === 'color') {
-      const hex = toHex8(v); // 0xAARRGGBB
-      colorLines.push(`  static const Color ${id} = Color(${hex});`);
-    } else if (type === 'dimension') {
-      // turn "12px" -> 12.0, "1.5rem" -> 1.5 (still double)
-      const match = v.match(/^(-?\d+(\.\d+)?)/);
-      const num = match ? parseFloat(match[1]) : Number(v);
-      doubleLines.push(`  static const double ${id} = ${Number.isFinite(num) ? num.toFixed(2) : 0};`);
-    } else if (type === 'fontFamily') {
-      stringLines.push(`  static const String ${id} = ${JSON.stringify(v)};`);
-    } else if (type === 'fontWeight') {
-      // weights are typically 100..900; keep as int
-      const num = parseInt(v, 10);
-      intLines.push(`  static const int ${id} = ${Number.isFinite(num) ? num : 400};`);
-    } else {
-      // default: string
-      stringLines.push(`  static const String ${id} = ${JSON.stringify(v)};`);
+      // First pass: create a copy with resolved references
+      for (const [key, token] of Object.entries(tokens)) {
+        result[key] = {
+          ...token,
+          value: resolveValue(token.value)
+        };
+      }
+      
+      return result;
     }
-  }
 
-  const dart = `// GENERATED FILE. Do not edit by hand.
-// Source: tokens/tokens.json
+    // Resolve all references (might need multiple passes for nested references)
+    let resolvedTokens = allTokens;
+    for (let i = 0; i < 5; i++) { // Up to 5 passes to resolve nested references
+      resolvedTokens = resolveReferences(resolvedTokens);
+    }
+
+    // Make sure output directories exist
+    if (!fs.existsSync('./build/web')) {
+      fs.mkdirSync('./build/web', { recursive: true });
+    }
+    if (!fs.existsSync('./build/flutter')) {
+      fs.mkdirSync('./build/flutter', { recursive: true });
+    }
+
+    // Generate CSS variables
+    const generateCssVariables = () => {
+      const lines = [":root {"];
+      
+      for (const [tokenPath, token] of Object.entries(resolvedTokens)) {
+        const nameParts = token.path;
+        const kebabName = nameParts.join("-").toLowerCase().replace(/[^a-z0-9-]/g, "-");
+        
+        let cssValue = token.value;
+        
+        // Apply transforms based on type
+        if (token.type === 'color') {
+          cssValue = toRgb(cssValue);
+        } else if (token.type === 'dimension') {
+          if (/^\d+(\.\d+)?$/.test(cssValue)) {
+            cssValue = `${cssValue}px`;
+          }
+        }
+        
+        lines.push(`  --${kebabName}: ${cssValue};`);
+      }
+      
+      lines.push("}");
+      fs.writeFileSync('./build/web/tokens.css', lines.join("\n") + "\n");
+      console.log('✅ CSS variables generated');
+    };
+
+    // Generate Dart class
+    const generateDartClass = () => {
+      const colors = [];
+      const doubles = [];
+      const ints = [];
+      const strings = [];
+      
+      for (const [tokenPath, token] of Object.entries(resolvedTokens)) {
+        const nameParts = token.path;
+        const snakeName = nameParts.join("_").replace(/[^a-zA-Z0-9_]/g, "_");
+        
+        if (token.type === "color") {
+          colors.push(
+            `  static const Color ${snakeName} = Color(${toHex8(token.value)});`
+          );
+        } else if (token.type === "dimension") {
+          doubles.push(
+            `  static const double ${snakeName} = ${getNumber(token.value)};`
+          );
+        } else if (token.type === "fontWeight") {
+          ints.push(
+            `  static const int ${snakeName} = ${parseInt(String(token.value), 10) || 400};`
+          );
+        } else if (typeof token.value === "string") {
+          strings.push(
+            `  static const String ${snakeName} = ${JSON.stringify(token.value)};`
+          );
+        } else {
+          strings.push(
+            `  static const String ${snakeName} = ${JSON.stringify(String(token.value))};`
+          );
+        }
+      }
+      
+      const dartCode = `// GENERATED — DO NOT EDIT
+// File: tokens.dart
 
 import 'package:flutter/material.dart';
 
 class AppTokens {
-${colorLines.join('\n')}
-${doubleLines.join('\n')}
-${intLines.join('\n')}
-${stringLines.join('\n')}
-}
-`;
-  fs.mkdirSync(path.dirname(outFile), { recursive: true });
-  fs.writeFileSync(outFile, dart, 'utf8');
-  console.log('✓ Dart written to', outFile);
+${colors.join("\n")}
+${doubles.join("\n")}
+${ints.join("\n")}
+${strings.join("\n")}
 }
 
-// ---------- Run once or watch ----------
-const outCss = path.resolve('web/tokens.css');
-const outDart = path.resolve('flutter/tokens.dart');
+class TokenScale {
+  TokenScale._();
+  static double hairline(context) => 1.0 / MediaQuery.of(context).devicePixelRatio;
+}`;
 
-function buildAll() {
-  buildCss(allTokens, outCss);
-  buildDart(allTokens, outDart);
-}
+      fs.writeFileSync('./build/flutter/tokens.dart', dartCode);
+      console.log('✅ Dart class generated');
+    };
 
-if (process.argv.includes('--watch')) {
-  console.log('Watching tokens/tokens.json…');
-  buildAll();
-  fs.watchFile(TOKENS_PATH, { interval: 500 }, () => {
-    console.log('\nChange detected, rebuilding…');
-    const raw2 = JSON.parse(fs.readFileSync(TOKENS_PATH, 'utf8'));
-    const tokens2 = flattenTokens(raw2);
-    buildCss(tokens2, outCss);
-    buildDart(tokens2, outDart);
-  });
-} else {
-  buildAll();
-}
+    // Generate output files
+    generateCssVariables();
+    generateDartClass();
+    
+    console.log('✅ Design tokens built successfully!');
+  } catch (error) {
+    console.error('Error building tokens:', error);
+    process.exit(1);
+  }
+};
+
+// Run the build
+buildTokens();

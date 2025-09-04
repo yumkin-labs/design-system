@@ -1,0 +1,40 @@
+{
+    "button": {
+        "color": {
+            "background": {
+                "primary": {
+                    "$type": "color",
+                    "$value": "{color.brand.solid}"
+                },
+                "secondary": {
+                    "$type": "color",
+                    "$value": "{color.brand.shade}"
+                }
+            },
+            "text": {
+                "primary": {
+                    "$type": "color",
+                    "$value": "{color.white}"
+                },
+                "secondary": {
+                    "$type": "color",
+                    "$value": "{color.dark}"
+                }
+            }
+        },
+        "size": {
+            "padding": {
+                "$type": "dimension",
+                "$value": "{size.spacing.m} {size.spacing.l}"
+            },
+            "gap": {
+                "$type": "dimension",
+                "$value": "{size.spacing.xs}"
+            },
+            "border-radius": {
+                "$type": "dimension",
+                "$value": "{size.spacing.s}"
+            }
+        }
+    }
+}
