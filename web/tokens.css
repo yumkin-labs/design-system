@@ -1,0 +1,19 @@
+:root {
+  --color-brand-primary: rgb(79, 70, 229);
+  --color-brand-primary-600: rgb(79, 70, 229);
+  --color-brand-primary-700: rgb(67, 56, 202);
+  --color-neutral-0: rgb(255, 255, 255);
+  --color-neutral-900: rgb(11, 16, 32);
+  --size-radius-sm: 4px;
+  --size-radius-md: 8px;
+  --size-spacing-xs: 4px;
+  --size-spacing-sm: 8px;
+  --size-spacing-md: 12px;
+  --size-spacing-lg: 16px;
+  --size-font-sm: 14px;
+  --size-font-md: 16px;
+  --size-font-lg: 20px;
+  --font-family-sans: Inter;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+}
