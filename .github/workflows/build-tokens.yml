@@ -3,11 +3,8 @@ name: Build Design Tokens
 
 on:
   push:
-    paths:
-      - "tokens/**/*.json"
-      - "build.js"
-  workflow_dispatch: # Allow manual triggering
-
+    branches:
+      - $default-branch
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -43,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dart-tokens
-          path: flutter/tokens.dart
+          path: build/flutter/tokens.dart
