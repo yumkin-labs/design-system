@@ -1,15 +1,48 @@
 {
-  "name": "design-tokens-pipeline",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "node build.js",
-    "watch": "node --watch build.js"
-  },
-  "devDependencies": {
-    "style-dictionary": "^5.0.4",
-    "tinycolor2": "^1.6.0"
-  },
-  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
+	"name": "yumkin-design-tokens",
+	"version": "1.0.0",
+	"description": "Yumkin – Design Tokens Pipeline",
+	"author": "Yumkin <yumkin@yumkin.com>",
+	"license": "MIT",
+	"homepage": "https://github.com/yumkin-labs/design-system",
+	"bugs": {
+		"url": "https://github.com/yumkin-labs/design-system/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/yumkin-labs/design-system.git"
+	},
+	"type": "module",
+	"main": "./build/web/tokens.css",
+	"files": [
+		"build/**/*"
+	],
+	"exports": {
+		"./web": "./build/web/tokens.css",
+		"./flutter": "./build/flutter/tokens.dart",
+		"./css": "./build/web/tokens.css",
+		"./dart": "./build/flutter/tokens.dart"
+	},
+	"keywords": [
+		"design-tokens",
+		"design-system",
+		"css-variables",
+		"flutter",
+		"tokens",
+		"figma-tokens"
+	],
+	"scripts": {
+		"build": "node scripts/build.js",
+		"watch": "node --watch scripts/build.js",
+		"prepublishOnly": "npm run build",
+		"version": "node scripts/version.js",
+		"version:patch": "npm version patch && git push --follow-tags",
+		"version:minor": "npm version minor && git push --follow-tags",
+		"version:major": "npm version major && git push --follow-tags"
+	},
+	"devDependencies": {
+		"style-dictionary": "^5.0.4",
+		"tinycolor2": "^1.6.0"
+	},
+	"packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
 }

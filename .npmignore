@@ -1,0 +1,18 @@
+# Source files
+tokens/
+build.js
+
+# Development files
+node_modules/
+.pnpm-store/
+*.log
+.DS_Store
+
+# Git files
+.git/
+.gitignore
+
+# Only include build directory
+# (package.json files field handles this, but this is a safety net)
+
+
