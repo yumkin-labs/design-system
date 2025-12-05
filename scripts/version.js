@@ -30,27 +30,24 @@ function checkGitStatus() {
 async function main() {
   console.log("\n🚀 Version & Release Script\n");
 
-  // Check for uncommitted changes
+  // Check for uncommitted changes FIRST - npm version requires clean working directory
   const gitStatus = checkGitStatus();
   if (gitStatus) {
-    console.log("⚠️  Warning: You have uncommitted changes:");
-    console.log(gitStatus.split("\n").slice(0, 5).join("\n"));
-    if (gitStatus.split("\n").length > 5) {
-      console.log(`   ... and ${gitStatus.split("\n").length - 5} more`);
+    console.log("⚠️  Error: You have uncommitted changes:");
+    console.log(gitStatus.split("\n").slice(0, 10).join("\n"));
+    if (gitStatus.split("\n").length > 10) {
+      console.log(`   ... and ${gitStatus.split("\n").length - 10} more`);
     }
     console.log("\n");
-
-    const proceed = await askQuestion(
-      "Continue anyway? npm version will fail if there are uncommitted changes. (y/n): "
+    console.log("npm version requires a clean git working directory.\n");
+    console.log(
+      "Please commit or stash your changes first, then run this script again.\n"
     );
-
-    if (proceed !== "y" && proceed !== "yes") {
-      console.log("\n❌ Aborted. Please commit or stash your changes first.\n");
-      rl.close();
-      process.exit(0);
-    }
+    rl.close();
+    process.exit(1);
   }
 
+  // Only ask for version type if git is clean
   let versionType;
   while (!["major", "minor", "patch"].includes(versionType)) {
     versionType = await askQuestion(
