@@ -142,6 +142,58 @@ Divider(thickness: TokenScale.hairline(context));
 - `fontFamily` → String
 - `fontWeight` → int (100–900)
 
+### 🔤 Required Fonts
+
+This design system requires the following fonts to be loaded:
+
+- **Montserrat** (brand font)
+- **Inter** (interface font)
+
+#### Web
+
+Load fonts via Google Fonts in your HTML:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+Or via CSS `@import`:
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+```
+
+#### Flutter
+
+Add fonts to your `pubspec.yaml`:
+
+```yaml
+flutter:
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter-Regular.ttf
+        - asset: fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Inter-Bold.ttf
+          weight: 700
+```
+
+Download fonts from [Google Fonts](https://fonts.google.com/specimen/Montserrat) and [Google Fonts](https://fonts.google.com/specimen/Inter).
+
 ## 📤 Publishing to npm
 
 ### Prerequisites
