@@ -1,6 +1,6 @@
 {
 	"name": "yumkin-design-tokens",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Yumkin – Design Tokens Pipeline",
 	"author": "Yumkin <yumkin@yumkin.com>",
 	"license": "MIT",
@@ -36,9 +36,9 @@
 		"watch": "node --watch scripts/build.js",
 		"prepublishOnly": "npm run build",
 		"version": "node scripts/version.js",
-		"version:patch": "npm version patch && git push --follow-tags",
-		"version:minor": "npm version minor && git push --follow-tags",
-		"version:major": "npm version major && git push --follow-tags"
+		"pub": "npm version patch --force && npm publish",
+		"pub:major": "npm version major --force && npm publish",
+		"pub:minor": "npm version minor --force && npm publish"
 	},
 	"devDependencies": {
 		"style-dictionary": "^5.0.4",
