@@ -70,15 +70,29 @@ const buildTokens = async () => {
     // Resolve references in token values
     function resolveReferences(tokens) {
       const result = {};
-      const resolveValue = (value) => {
+      
+      const resolveValue = (value, visited = new Set()) => {
         if (typeof value !== 'string') return value;
         
         return value.replace(/\{([^}]+)\}/g, (match, refPath) => {
+          // Check for circular reference
+          if (visited.has(refPath)) {
+            console.warn(`Circular reference detected: ${refPath}`);
+            return match;
+          }
+          
           const referencedToken = tokens[refPath];
-          if (!referencedToken) return match; // Keep original if reference not found
+          if (!referencedToken) {
+            console.warn(`Reference not found: ${refPath}`);
+            return match; // Keep original if reference not found
+          }
+          
+          // Add to visited set for this resolution path
+          const newVisited = new Set(visited);
+          newVisited.add(refPath);
           
           // Recursively resolve nested references
-          const resolvedValue = resolveValue(referencedToken.value);
+          const resolvedValue = resolveValue(referencedToken.value, newVisited);
           return resolvedValue;
         });
       };
@@ -96,8 +110,16 @@ const buildTokens = async () => {
 
     // Resolve all references (might need multiple passes for nested references)
     let resolvedTokens = allTokens;
-    for (let i = 0; i < 5; i++) { // Up to 5 passes to resolve nested references
+    let previousTokens = null;
+    for (let i = 0; i < 10; i++) { // Up to 10 passes to resolve nested references
       resolvedTokens = resolveReferences(resolvedTokens);
+      
+      // Check if we've made progress (no more references to resolve)
+      const hasReferences = JSON.stringify(resolvedTokens).includes('{');
+      if (!hasReferences || JSON.stringify(resolvedTokens) === JSON.stringify(previousTokens)) {
+        break;
+      }
+      previousTokens = JSON.parse(JSON.stringify(resolvedTokens));
     }
 
     // Make sure output directories exist

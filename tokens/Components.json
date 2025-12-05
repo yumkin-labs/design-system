@@ -1,114 +1,306 @@
 {
-	"button": {
+	"$schema": "https://schemas.w3.org/design-tokens",
+	"form": {
+		"$description": "Base form tokens shared across all form inputs",
 		"color": {
 			"background": {
-				"primary": {
+				"default": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{color.surface.base}",
+					"$description": "Default form input background"
 				},
-				"secondary": {
+				"hover": {
 					"$type": "color",
-					"$value": "{color.brand.shade}"
+					"$value": "{color.surface.base}",
+					"$description": "Form input background on hover"
+				},
+				"focus": {
+					"$type": "color",
+					"$value": "{color.surface.base}",
+					"$description": "Form input background on focus"
+				},
+				"error": {
+					"$type": "color",
+					"$value": "{color.state.error.subtle}",
+					"$description": "Form input background in error state"
+				},
+				"disabled": {
+					"$type": "color",
+					"$value": "{color.surface.subtle}",
+					"$description": "Form input background when disabled"
+				}
+			},
+			"border": {
+				"default": {
+					"$type": "color",
+					"$value": "{color.border.default}",
+					"$description": "Default form input border"
+				},
+				"hover": {
+					"$type": "color",
+					"$value": "{color.border.emphasized}",
+					"$description": "Form input border on hover"
+				},
+				"focus": {
+					"$type": "color",
+					"$value": "{color.border.focus}",
+					"$description": "Form input border on focus"
+				},
+				"error": {
+					"$type": "color",
+					"$value": "{color.state.error.primary}",
+					"$description": "Form input border in error state"
+				},
+				"disabled": {
+					"$type": "color",
+					"$value": "{color.border.subtle}",
+					"$description": "Form input border when disabled"
 				}
 			},
 			"text": {
-				"primary": {
+				"default": {
 					"$type": "color",
-					"$value": "{color.white}"
+					"$value": "{color.text.primary}",
+					"$description": "Default form input text color"
 				},
-				"secondary": {
+				"placeholder": {
 					"$type": "color",
-					"$value": "{color.dark}"
+					"$value": "{color.text.tertiary}",
+					"$description": "Form input placeholder text color"
+				},
+				"disabled": {
+					"$type": "color",
+					"$value": "{color.text.disabled}",
+					"$description": "Form input text color when disabled"
+				}
+			},
+			"icon": {
+				"default": {
+					"$type": "color",
+					"$value": "{color.text.tertiary}",
+					"$description": "Default form input icon color"
+				},
+				"focus": {
+					"$type": "color",
+					"$value": "{color.border.focus}",
+					"$description": "Form input icon color on focus"
+				},
+				"error": {
+					"$type": "color",
+					"$value": "{color.state.error.primary}",
+					"$description": "Form input icon color in error state"
 				}
 			}
 		},
 		"size": {
 			"padding": {
-				"$type": "dimension",
-				"$value": "{size.spacing.m} {size.spacing.l}"
+				"horizontal": {
+					"$type": "dimension",
+					"$value": "{size.spacing.md}",
+					"$description": "Horizontal padding for form inputs"
+				},
+				"vertical": {
+					"$type": "dimension",
+					"$value": "{size.spacing.md}",
+					"$description": "Vertical padding for form inputs"
+				}
+			},
+			"height": {
+				"sm": {
+					"$type": "dimension",
+					"$value": "2rem",
+					"$description": "Small form input height"
+				},
+				"md": {
+					"$type": "dimension",
+					"$value": "2.5rem",
+					"$description": "Medium form input height"
+				},
+				"lg": {
+					"$type": "dimension",
+					"$value": "3rem",
+					"$description": "Large form input height"
+				}
+			},
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{size.border.radius.md}",
+					"$description": "Border radius for form inputs"
+				},
+				"width": {
+					"$type": "dimension",
+					"$value": "{size.border.width.thin}",
+					"$description": "Border width for form inputs"
+				}
 			},
 			"gap": {
 				"$type": "dimension",
-				"$value": "{size.spacing.xs}"
+				"$value": "{size.spacing.xs}",
+				"$description": "Gap between form input elements"
+			}
+		},
+		"typography": {
+			"font-family": {
+				"$type": "fontFamily",
+				"$value": "{font.family.interface}",
+				"$description": "Font family for form inputs"
 			},
-			"border-radius": {
+			"font-size": {
 				"$type": "dimension",
-				"$value": "{size.spacing.s}"
+				"$value": "{font.size.md}",
+				"$description": "Font size for form inputs"
+			},
+			"font-weight": {
+				"$type": "fontWeight",
+				"$value": "{font.weight.medium}",
+				"$description": "Font weight for form inputs"
+			},
+			"line-height": {
+				"$type": "dimension",
+				"$value": "{font.line-height.normal}",
+				"$description": "Line height for form inputs"
+			}
+		}
+	},
+	"button": {
+		"$description": "Button component tokens",
+		"color": {
+			"background": {
+				"primary": {
+					"$type": "color",
+					"$value": "{color.brand.primary}",
+					"$description": "Primary button background"
+				},
+				"primary-hover": {
+					"$type": "color",
+					"$value": "{color.brand.primary-hover}",
+					"$description": "Primary button background on hover"
+				},
+				"secondary": {
+					"$type": "color",
+					"$value": "{color.brand.primary-subtle}",
+					"$description": "Secondary button background"
+				},
+				"secondary-hover": {
+					"$type": "color",
+					"$value": "{color.brand.primary-light}",
+					"$description": "Secondary button background on hover"
+				}
+			},
+			"text": {
+				"primary": {
+					"$type": "color",
+					"$value": "{color.text.inverse}",
+					"$description": "Primary button text color"
+				},
+				"secondary": {
+					"$type": "color",
+					"$value": "{color.text.primary}",
+					"$description": "Secondary button text color"
+				}
+			}
+		},
+		"size": {
+			"padding": {
+				"horizontal": {
+					"$type": "dimension",
+					"$value": "{size.spacing.lg}",
+					"$description": "Horizontal padding for buttons"
+				},
+				"vertical": {
+					"$type": "dimension",
+					"$value": "{size.spacing.md}",
+					"$description": "Vertical padding for buttons"
+				}
+			},
+			"gap": {
+				"$type": "dimension",
+				"$value": "{size.spacing.xs}",
+				"$description": "Gap between button elements"
+			},
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{size.border.radius.md}",
+					"$description": "Border radius for buttons"
+				}
 			}
 		}
 	},
 	"input": {
+		"$description": "Text input component tokens",
 		"color": {
 			"background": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.surface.background-white}"
+					"$value": "{form.color.background.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{color.surface.background-white}"
+					"$value": "{form.color.background.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{color.surface.background-white}"
+					"$value": "{form.color.background.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{color.state.alarm.shade}"
+					"$value": "{form.color.background.error}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.surface.background-0}"
+					"$value": "{form.color.background.disabled}"
 				}
 			},
 			"border": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{form.color.border.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{color.beige.400}"
+					"$value": "{form.color.border.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{form.color.border.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{color.state.alarm.solid}"
+					"$value": "{form.color.border.error}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.200}"
+					"$value": "{form.color.border.disabled}"
 				}
 			},
 			"text": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.surface.text}"
+					"$value": "{form.color.text.default}"
 				},
 				"placeholder": {
 					"$type": "color",
-					"$value": "{color.beige.400}"
+					"$value": "{form.color.text.placeholder}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{form.color.text.disabled}"
 				}
 			},
 			"icon": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.beige.400}"
+					"$value": "{form.color.icon.default}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{form.color.icon.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{color.state.alarm.solid}"
+					"$value": "{form.color.icon.error}"
 				}
 			}
 		},
@@ -116,117 +308,120 @@
 			"padding": {
 				"horizontal": {
 					"$type": "dimension",
-					"$value": "{size.spacing.m}"
+					"$value": "{form.size.padding.horizontal}"
 				},
 				"vertical": {
 					"$type": "dimension",
-					"$value": "{size.spacing.m}"
+					"$value": "{form.size.padding.vertical}"
 				}
 			},
 			"height": {
-				"default": {
+				"sm": {
 					"$type": "dimension",
-					"$value": "2.5rem"
+					"$value": "{form.size.height.sm}"
 				},
-				"small": {
+				"md": {
 					"$type": "dimension",
-					"$value": "2rem"
+					"$value": "{form.size.height.md}"
 				},
-				"large": {
+				"lg": {
 					"$type": "dimension",
-					"$value": "3rem"
+					"$value": "{form.size.height.lg}"
 				}
 			},
-			"border-radius": {
-				"$type": "dimension",
-				"$value": "{size.spacing.s}"
-			},
-			"border-width": {
-				"$type": "dimension",
-				"$value": "1px"
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{form.size.border.radius}"
+				},
+				"width": {
+					"$type": "dimension",
+					"$value": "{form.size.border.width}"
+				}
 			},
 			"gap": {
 				"$type": "dimension",
-				"$value": "{size.spacing.xs}"
+				"$value": "{form.size.gap}"
 			}
 		},
 		"typography": {
 			"font-family": {
 				"$type": "fontFamily",
-				"$value": "{font.interface}"
+				"$value": "{form.typography.font-family}"
 			},
 			"font-size": {
 				"$type": "dimension",
-				"$value": "{font.size.m}"
+				"$value": "{form.typography.font-size}"
 			},
 			"font-weight": {
 				"$type": "fontWeight",
-				"$value": "{font.weight.medium}"
+				"$value": "{form.typography.font-weight}"
 			},
 			"line-height": {
 				"$type": "dimension",
-				"$value": "1.5"
+				"$value": "{form.typography.line-height}"
 			}
 		}
 	},
 	"textarea": {
+		"$description": "Textarea component tokens",
 		"color": {
 			"background": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.background.default}"
+					"$value": "{form.color.background.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{input.color.background.hover}"
+					"$value": "{form.color.background.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.background.focus}"
+					"$value": "{form.color.background.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{input.color.background.error}"
+					"$value": "{form.color.background.error}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{input.color.background.disabled}"
+					"$value": "{form.color.background.disabled}"
 				}
 			},
 			"border": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.border.default}"
+					"$value": "{form.color.border.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{input.color.border.hover}"
+					"$value": "{form.color.border.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.border.focus}"
+					"$value": "{form.color.border.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{input.color.border.error}"
+					"$value": "{form.color.border.error}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{input.color.border.disabled}"
+					"$value": "{form.color.border.disabled}"
 				}
 			},
 			"text": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.text.default}"
+					"$value": "{form.color.text.default}"
 				},
 				"placeholder": {
 					"$type": "color",
-					"$value": "{input.color.text.placeholder}"
+					"$value": "{form.color.text.placeholder}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{input.color.text.disabled}"
+					"$value": "{form.color.text.disabled}"
 				}
 			}
 		},
@@ -234,117 +429,121 @@
 			"padding": {
 				"horizontal": {
 					"$type": "dimension",
-					"$value": "{input.size.padding.horizontal}"
+					"$value": "{form.size.padding.horizontal}"
 				},
 				"vertical": {
 					"$type": "dimension",
-					"$value": "{input.size.padding.vertical}"
+					"$value": "{form.size.padding.vertical}"
 				}
 			},
 			"min-height": {
 				"$type": "dimension",
-				"$value": "6rem"
+				"$value": "6rem",
+				"$description": "Minimum height for textarea"
 			},
-			"border-radius": {
-				"$type": "dimension",
-				"$value": "{input.size.border-radius}"
-			},
-			"border-width": {
-				"$type": "dimension",
-				"$value": "{input.size.border-width}"
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{form.size.border.radius}"
+				},
+				"width": {
+					"$type": "dimension",
+					"$value": "{form.size.border.width}"
+				}
 			}
 		},
 		"typography": {
 			"font-family": {
 				"$type": "fontFamily",
-				"$value": "{input.typography.font-family}"
+				"$value": "{form.typography.font-family}"
 			},
 			"font-size": {
 				"$type": "dimension",
-				"$value": "{input.typography.font-size}"
+				"$value": "{form.typography.font-size}"
 			},
 			"font-weight": {
 				"$type": "fontWeight",
-				"$value": "{input.typography.font-weight}"
+				"$value": "{form.typography.font-weight}"
 			},
 			"line-height": {
 				"$type": "dimension",
-				"$value": "{input.typography.line-height}"
+				"$value": "{form.typography.line-height}"
 			}
 		}
 	},
 	"select": {
+		"$description": "Select/Dropdown component tokens",
 		"color": {
 			"background": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.background.default}"
+					"$value": "{form.color.background.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{input.color.background.hover}"
+					"$value": "{form.color.background.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.background.focus}"
+					"$value": "{form.color.background.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{input.color.background.error}"
+					"$value": "{form.color.background.error}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{input.color.background.disabled}"
+					"$value": "{form.color.background.disabled}"
 				}
 			},
 			"border": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.border.default}"
+					"$value": "{form.color.border.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{input.color.border.hover}"
+					"$value": "{form.color.border.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.border.focus}"
+					"$value": "{form.color.border.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{input.color.border.error}"
+					"$value": "{form.color.border.error}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{input.color.border.disabled}"
+					"$value": "{form.color.border.disabled}"
 				}
 			},
 			"text": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.text.default}"
+					"$value": "{form.color.text.default}"
 				},
 				"placeholder": {
 					"$type": "color",
-					"$value": "{input.color.text.placeholder}"
+					"$value": "{form.color.text.placeholder}"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{input.color.text.disabled}"
+					"$value": "{form.color.text.disabled}"
 				}
 			},
 			"icon": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.icon.default}"
+					"$value": "{form.color.icon.default}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.icon.focus}"
+					"$value": "{form.color.icon.focus}"
 				},
 				"error": {
 					"$type": "color",
-					"$value": "{input.color.icon.error}"
+					"$value": "{form.color.icon.error}"
 				}
 			}
 		},
@@ -352,271 +551,316 @@
 			"padding": {
 				"horizontal": {
 					"$type": "dimension",
-					"$value": "{input.size.padding.horizontal}"
+					"$value": "{form.size.padding.horizontal}"
 				},
 				"vertical": {
 					"$type": "dimension",
-					"$value": "{input.size.padding.vertical}"
+					"$value": "{form.size.padding.vertical}"
 				}
 			},
 			"height": {
-				"default": {
+				"sm": {
 					"$type": "dimension",
-					"$value": "{input.size.height.default}"
+					"$value": "{form.size.height.sm}"
 				},
-				"small": {
+				"md": {
 					"$type": "dimension",
-					"$value": "{input.size.height.small}"
+					"$value": "{form.size.height.md}"
 				},
-				"large": {
+				"lg": {
 					"$type": "dimension",
-					"$value": "{input.size.height.large}"
+					"$value": "{form.size.height.lg}"
 				}
 			},
-			"border-radius": {
-				"$type": "dimension",
-				"$value": "{input.size.border-radius}"
-			},
-			"border-width": {
-				"$type": "dimension",
-				"$value": "{input.size.border-width}"
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{form.size.border.radius}"
+				},
+				"width": {
+					"$type": "dimension",
+					"$value": "{form.size.border.width}"
+				}
 			},
 			"gap": {
 				"$type": "dimension",
-				"$value": "{input.size.gap}"
+				"$value": "{form.size.gap}"
 			}
 		},
 		"typography": {
 			"font-family": {
 				"$type": "fontFamily",
-				"$value": "{input.typography.font-family}"
+				"$value": "{form.typography.font-family}"
 			},
 			"font-size": {
 				"$type": "dimension",
-				"$value": "{input.typography.font-size}"
+				"$value": "{form.typography.font-size}"
 			},
 			"font-weight": {
 				"$type": "fontWeight",
-				"$value": "{input.typography.font-weight}"
+				"$value": "{form.typography.font-weight}"
 			},
 			"line-height": {
 				"$type": "dimension",
-				"$value": "{input.typography.line-height}"
+				"$value": "{form.typography.line-height}"
 			}
 		}
 	},
 	"checkbox": {
+		"$description": "Checkbox component tokens",
 		"color": {
 			"background": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.surface.background-white}"
+					"$value": "{color.surface.base}",
+					"$description": "Default checkbox background"
 				},
 				"checked": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{color.brand.primary}",
+					"$description": "Checkbox background when checked"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{color.brand.shade}"
+					"$value": "{color.brand.primary-subtle}",
+					"$description": "Checkbox background on hover"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.surface.background-0}"
+					"$value": "{color.surface.subtle}",
+					"$description": "Checkbox background when disabled"
 				}
 			},
 			"border": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{color.border.default}",
+					"$description": "Default checkbox border"
 				},
 				"checked": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{color.brand.primary}",
+					"$description": "Checkbox border when checked"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{color.beige.400}"
+					"$value": "{color.border.emphasized}",
+					"$description": "Checkbox border on hover"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.200}"
+					"$value": "{color.border.subtle}",
+					"$description": "Checkbox border when disabled"
 				}
 			},
 			"checkmark": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.white}"
+					"$value": "{color.text.inverse}",
+					"$description": "Checkbox checkmark color"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{color.text.disabled}",
+					"$description": "Checkbox checkmark color when disabled"
 				}
 			},
 			"text": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.surface.text}"
+					"$value": "{color.text.primary}",
+					"$description": "Checkbox label text color"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{color.text.disabled}",
+					"$description": "Checkbox label text color when disabled"
 				}
 			}
 		},
 		"size": {
 			"width": {
 				"$type": "dimension",
-				"$value": "1.25rem"
+				"$value": "1.25rem",
+				"$description": "Checkbox width"
 			},
 			"height": {
 				"$type": "dimension",
-				"$value": "1.25rem"
+				"$value": "1.25rem",
+				"$description": "Checkbox height"
 			},
-			"border-radius": {
-				"$type": "dimension",
-				"$value": "0.25rem"
-			},
-			"border-width": {
-				"$type": "dimension",
-				"$value": "2px"
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{size.border.radius.sm}",
+					"$description": "Checkbox border radius"
+				},
+				"width": {
+					"$type": "dimension",
+					"$value": "{size.border.width.medium}",
+					"$description": "Checkbox border width"
+				}
 			},
 			"gap": {
 				"$type": "dimension",
-				"$value": "{size.spacing.xs}"
+				"$value": "{size.spacing.xs}",
+				"$description": "Gap between checkbox and label"
 			}
 		}
 	},
 	"radio": {
+		"$description": "Radio button component tokens",
 		"color": {
 			"background": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.surface.background-white}"
+					"$value": "{color.surface.base}",
+					"$description": "Default radio button background"
 				},
 				"checked": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{color.brand.primary}",
+					"$description": "Radio button background when checked"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{color.brand.shade}"
+					"$value": "{color.brand.primary-subtle}",
+					"$description": "Radio button background on hover"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.surface.background-0}"
+					"$value": "{color.surface.subtle}",
+					"$description": "Radio button background when disabled"
 				}
 			},
 			"border": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{color.border.default}",
+					"$description": "Default radio button border"
 				},
 				"checked": {
 					"$type": "color",
-					"$value": "{color.brand.solid}"
+					"$value": "{color.brand.primary}",
+					"$description": "Radio button border when checked"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{color.beige.400}"
+					"$value": "{color.border.emphasized}",
+					"$description": "Radio button border on hover"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.200}"
+					"$value": "{color.border.subtle}",
+					"$description": "Radio button border when disabled"
 				}
 			},
 			"dot": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.white}"
+					"$value": "{color.text.inverse}",
+					"$description": "Radio button dot color"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{color.text.disabled}",
+					"$description": "Radio button dot color when disabled"
 				}
 			},
 			"text": {
 				"default": {
 					"$type": "color",
-					"$value": "{color.surface.text}"
+					"$value": "{color.text.primary}",
+					"$description": "Radio button label text color"
 				},
 				"disabled": {
 					"$type": "color",
-					"$value": "{color.beige.300}"
+					"$value": "{color.text.disabled}",
+					"$description": "Radio button label text color when disabled"
 				}
 			}
 		},
 		"size": {
 			"width": {
 				"$type": "dimension",
-				"$value": "1.25rem"
+				"$value": "1.25rem",
+				"$description": "Radio button width"
 			},
 			"height": {
 				"$type": "dimension",
-				"$value": "1.25rem"
+				"$value": "1.25rem",
+				"$description": "Radio button height"
 			},
-			"border-width": {
-				"$type": "dimension",
-				"$value": "2px"
+			"border": {
+				"width": {
+					"$type": "dimension",
+					"$value": "{size.border.width.medium}",
+					"$description": "Radio button border width"
+				}
 			},
-			"dot-size": {
-				"$type": "dimension",
-				"$value": "0.5rem"
+			"dot": {
+				"size": {
+					"$type": "dimension",
+					"$value": "0.5rem",
+					"$description": "Radio button dot size"
+				}
 			},
 			"gap": {
 				"$type": "dimension",
-				"$value": "{size.spacing.xs}"
+				"$value": "{size.spacing.xs}",
+				"$description": "Gap between radio button and label"
 			}
 		}
 	},
 	"search": {
+		"$description": "Search input component tokens",
 		"color": {
 			"background": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.background.default}"
+					"$value": "{form.color.background.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{input.color.background.hover}"
+					"$value": "{form.color.background.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.background.focus}"
+					"$value": "{form.color.background.focus}"
 				}
 			},
 			"border": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.border.default}"
+					"$value": "{form.color.border.default}"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "{input.color.border.hover}"
+					"$value": "{form.color.border.hover}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.border.focus}"
+					"$value": "{form.color.border.focus}"
 				}
 			},
 			"text": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.text.default}"
+					"$value": "{form.color.text.default}"
 				},
 				"placeholder": {
 					"$type": "color",
-					"$value": "{input.color.text.placeholder}"
+					"$value": "{form.color.text.placeholder}"
 				}
 			},
 			"icon": {
 				"default": {
 					"$type": "color",
-					"$value": "{input.color.icon.default}"
+					"$value": "{form.color.icon.default}"
 				},
 				"focus": {
 					"$type": "color",
-					"$value": "{input.color.icon.focus}"
+					"$value": "{form.color.icon.focus}"
 				}
 			}
 		},
@@ -624,48 +868,50 @@
 			"padding": {
 				"horizontal": {
 					"$type": "dimension",
-					"$value": "{input.size.padding.horizontal}"
+					"$value": "{form.size.padding.horizontal}"
 				},
 				"vertical": {
 					"$type": "dimension",
-					"$value": "{input.size.padding.vertical}"
+					"$value": "{form.size.padding.vertical}"
 				}
 			},
 			"height": {
-				"default": {
+				"md": {
 					"$type": "dimension",
-					"$value": "{input.size.height.default}"
+					"$value": "{form.size.height.md}"
 				}
 			},
-			"border-radius": {
-				"$type": "dimension",
-				"$value": "{input.size.border-radius}"
-			},
-			"border-width": {
-				"$type": "dimension",
-				"$value": "{input.size.border-width}"
+			"border": {
+				"radius": {
+					"$type": "dimension",
+					"$value": "{form.size.border.radius}"
+				},
+				"width": {
+					"$type": "dimension",
+					"$value": "{form.size.border.width}"
+				}
 			},
 			"gap": {
 				"$type": "dimension",
-				"$value": "{input.size.gap}"
+				"$value": "{form.size.gap}"
 			}
 		},
 		"typography": {
 			"font-family": {
 				"$type": "fontFamily",
-				"$value": "{input.typography.font-family}"
+				"$value": "{form.typography.font-family}"
 			},
 			"font-size": {
 				"$type": "dimension",
-				"$value": "{input.typography.font-size}"
+				"$value": "{form.typography.font-size}"
 			},
 			"font-weight": {
 				"$type": "fontWeight",
-				"$value": "{input.typography.font-weight}"
+				"$value": "{form.typography.font-weight}"
 			},
 			"line-height": {
 				"$type": "dimension",
-				"$value": "{input.typography.line-height}"
+				"$value": "{form.typography.line-height}"
 			}
 		}
 	}
